@@ -1,44 +1,46 @@
 pipeline {
     agent any
     
-    
     stages {
+        stage('Build') {
+            steps {
+                script {
+                    echo "Build stage"
+                }
+            }
+        }
+        
         stage('Checkout') {
             steps {
                 script {
-                
-                            sh 'echo "login incorrect !!  && exit 1 "'
-                     
-            }
-            }  
-        } 
-        stage('Verify') {
-            steps {
-                script {
-                
-                        sh 'echo "Erreur lors de l\'exécution des tests de vérification"'
+                    echo "Checkout stage"
                   
                 }
             }
         }
         
-        stage('Install Dev DB') {
+        stage('Configure') {
             steps {
-                script { 
-                        sh 'echo "Installation réussie de la base de données de développement"'
+                script {
+                    echo "Configure stage"
                 }
             }
         }
         
-        stage('Install Val DB') {
+        stage('Build Again') {
             steps {
                 script {
-                  
-                        sh 'echo "Installation réussie de la base de données de validation"'
-                   
+                    echo "Build stage (again)"
+                }
+            }
+        }
+        
+        stage('Security Dependency Check') {
+            steps {
+                script {
+                    echo "Security Dependency Check stage"
+                }
             }
         }
     }
 }
-}
-
