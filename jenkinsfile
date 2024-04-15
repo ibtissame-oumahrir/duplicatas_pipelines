@@ -1,44 +1,32 @@
 pipeline {
     agent any
     
-    
     stages {
         stage('Checkout') {
             steps {
                 script {
-                
-                            sh 'echo "login incorrect !!  && exit 1 "'
-                     
-            }
-            }  
-        } 
-        stage('Verify') {
-            steps {
-                script {
-                
-                        sh 'echo "Erreur lors de l\'exécution des tests de vérification"'
-                  
-                }
-            }
-        }
-        
-        stage('Install Dev DB') {
-            steps {
-                script { 
-                        sh 'echo "Installation réussie de la base de données de développement"'
-                }
-            }
-        }
-        
-        stage('Install Val DB') {
-            steps {
-                script {
-                  
-                        sh 'echo "Installation réussie de la base de données de validation"'
+                    echo "Checkout stage"
                    
+                }
+            }
+        }
+        
+        stage('Compile Sources in Master Environment') {
+            steps {
+                script {
+                    echo "Compile Sources in Master Environment stage"
+          
+                }
+            }
+        }
+        
+        stage('Verify Quality: Sonar') {
+            steps {
+                script {
+                    echo "Verify Quality: Sonar stage"
+
+                }
             }
         }
     }
 }
-}
-
