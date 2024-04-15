@@ -1,44 +1,45 @@
 pipeline {
     agent any
     
-    
     stages {
-        stage('Checkout') {
+        stage('Declarative') {
             steps {
                 script {
-                
-                            sh 'echo "login incorrect !!  && exit 1 "'
-                     
-            }
-            }  
-        } 
-        stage('Verify') {
-            steps {
-                script {
-                
-                        sh 'echo "Erreur lors de l\'exécution des tests de vérification"'
-                  
+                    echo "Declarative stage"
                 }
             }
         }
         
-        stage('Install Dev DB') {
+        stage('Checkout SCM') {
             steps {
-                script { 
-                        sh 'echo "Installation réussie de la base de données de développement"'
+                script {
+                    echo "Checkout SCM stage"
                 }
             }
         }
         
-        stage('Install Val DB') {
+        stage('Build') {
             steps {
                 script {
-                  
-                        sh 'echo "Installation réussie de la base de données de validation"'
-                   
+                    echo "Build stage"
+                }
+            }
+        }
+        
+        stage('Configure && Build') {
+            steps {
+                script {
+                    echo "Configure && Build stage"
+                }
+            }
+        }
+        
+        stage('Publish to Nexus') {
+            steps {
+                script {
+                    echo "Publish to Nexus stage"
+                }
             }
         }
     }
 }
-}
-
