@@ -8,6 +8,7 @@ pipeline {
                 script {
                 
                             sh 'echo "login incorrect !!  && exit 1 "'
+                              sh 'echo "Login incorrect"'
                      
             }
             }  
