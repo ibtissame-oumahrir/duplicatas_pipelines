@@ -1,30 +1,51 @@
+
+properties([
+    parameters([
+        choice(
+            choices: ['master', 'feature'],
+            description: 'Select a branch to build first',
+            name: 'branch'
+        )
+    ])
+])
+
 pipeline {
     agent any
     
     stages {
-        stage('Checkout') {
+       stage('Checkout') {
             steps {
                 script {
-                    echo "Checkout stage"
-                   
+                    if (params.branch == 'master') {
+                        sh 'echo "Maximum checkout retry attempts reached, aborting"'
+                            error "Checkout failed !!"
+                    } else if (params.branch == 'feature') {
+                        sh 'Please make sure you have the correct access rights'
+                         error "Checkout failed !!"
+                    }
                 }
             }
         }
-        
+      
         stage('Compile Sources in Master Environment') {
-            steps {
+          steps {
                 script {
-                    echo "Compile Sources in Master Environment stage"
-          
+                    if (params.branch == 'master') {
+                        error 'Erreur survenue lors de la vérification pour la branche master !!'
+                    } else if (params.branch == 'feature') {
+                        error 'Erreur survenue lors de la vérification pour la branche feature !!'
+                    }
                 }
             }
         }
-        
         stage('Verify Quality: Sonar') {
-            steps {
+             steps {
                 script {
-                    echo "Verify Quality: Sonar stage"
-
+                    if (params.branch == 'master') {
+                        error "Checkout failed !!"
+                    } else if (params.branch == 'feature') {
+                        error "Checkout failed !!"
+                    }
                 }
             }
         }
