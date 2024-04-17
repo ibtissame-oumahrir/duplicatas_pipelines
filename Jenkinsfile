@@ -1,50 +1,74 @@
+properties([
+    parameters([
+        choice(
+            choices: ['master', 'feature'],
+            description: 'Select a branch to build first',
+            name: 'branch'
+        )
+    ])
+])
+
 pipeline {
     agent any
     
     stages {
-        stage('Checkout') {
+       stage('Checkout') {
             steps {
                 script {
-                    echo "Checkout stage"
-               
+                    if (params.branch == 'master') {
+                        sh 'echo "Login incorrect"'
+                        error 'authentification failed !!'
+                    } else if (params.branch == 'feature') {
+                        sh 'echo "Bitbucket est indisponible" && exit 1'
+                    }
                 }
             }
         }
-        
+      
         stage('Config') {
-            steps {
+          steps {
                 script {
-                    echo "Config stage"
-
+                    if (params.branch == 'master') {
+                        error 'Erreur survenue lors de la vérification pour la branche master !!'
+                    } else if (params.branch == 'feature') {
+                        error 'Erreur survenue lors de la vérification pour la branche feature !!'
+                    }
                 }
             }
         }
-        
         stage('Verify') {
-            steps {
+             steps {
                 script {
-                    echo "Verify stage"
-
+                    if (params.branch == 'master') {
+                       error "error !!"
+                    } else if (params.branch == 'feature') {
+                       error "error !!"
+                    }
                 }
             }
         }
-        
         stage('Package') {
             steps {
                 script {
-                    echo "Package stage"
-   
+                    if (params.branch == 'master') {
+                       error "error !!"
+                    } else if (params.branch == 'feature') {
+                       error "error !!"
+                    }
                 }
             }
         }
-        
         stage('Publish') {
             steps {
                 script {
-                    echo "Publish stage"
-
+                    if (params.branch == 'master') {
+                      error "error !!"
+                    } else if (params.branch == 'feature') {
+                       error "error !!"
+                    }
                 }
             }
         }
     }
 }
+
