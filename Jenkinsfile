@@ -1,3 +1,13 @@
+properties([
+    parameters([
+        choice(
+            choices: ['master', 'feature'],
+            description: 'Select a branch to build first',
+            name: 'branch'
+        )
+    ])
+])
+
 pipeline {
     agent any
     
