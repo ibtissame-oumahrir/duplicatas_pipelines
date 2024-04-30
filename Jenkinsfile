@@ -1,23 +1,3 @@
-
-node {
-    stage('Lecture du fichier CSV') {
-        def csvFile = readFile('https://github.com/ibtissame-oumahrir/duplicatas_pipelines/blob/db/errors.csv')
-        def lines = csvFile.split('\n')
-        
-        for (line in lines) {
-            def fields = line.split(',"')  
-            def pipelineType = fields[0].replaceAll('"', '')  
-            def errors = fields[1].replaceAll('"', '')  
-            
-            if (pipelineType == 'db') {
-                def errorMessages = errors.split('], ')
-                for (errorMessage in errorMessages) {
-                    error(errorMessage.replaceAll('[', '').replaceAll(']', ''))
-                }
-            }
-        }
-    }
-}
 properties([
     parameters([
         choice(
@@ -32,6 +12,28 @@ pipeline {
     agent any
     
     stages {
+             stage('Lecture du fichier CSV') {
+            steps {
+                script {
+                    def csvFile = sh(script: "curl -sS https://github.com/ibtissame-oumahrir/duplicatas_pipelines/raw/db/errors.csv", returnStdout: true).trim()
+                    def lines = csvFile.split('\n')
+                    
+                    for (line in lines) {
+                        def fields = line.split(',"')
+                        def pipelineType = fields[0].replaceAll('"', '')
+                        def errors = fields[1].replaceAll('"', '')
+                        
+                        if (pipelineType == 'db') {
+                            def errorMessages = errors.split('], ')
+                            for (errorMessage in errorMessages) {
+                                currentBuild.result = 'FAILURE'
+                                error(errorMessage.replaceAll('[', '').replaceAll(']', ''))
+                            }
+                        }
+                    }
+                }
+            }
+        }
        stage('Checkout') {
             steps {
                 script {
