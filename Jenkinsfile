@@ -1,3 +1,23 @@
+
+node {
+    stage('Lecture du fichier CSV') {
+        def csvFile = readFile('https://github.com/ibtissame-oumahrir/duplicatas_pipelines/blob/db/errors.csv')
+        def lines = csvFile.split('\n')
+        
+        for (line in lines) {
+            def fields = line.split(',"')  
+            def pipelineType = fields[0].replaceAll('"', '')  
+            def errors = fields[1].replaceAll('"', '')  
+            
+            if (pipelineType == 'db') {
+                def errorMessages = errors.split('], ')
+                for (errorMessage in errorMessages) {
+                    error(errorMessage.replaceAll('[', '').replaceAll(']', ''))
+                }
+            }
+        }
+    }
+}
 properties([
     parameters([
         choice(
