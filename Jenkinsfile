@@ -2,15 +2,7 @@ pipeline {
     agent any
     
     stages {
-        stage('Declarative') {
-            steps {
-                script {
-                    echo "Declarative stage"
-                }
-            }
-        }
-        
-        stage('Checkout SCM') {
+        stage('Declarative: Checkout SCM') {
             steps {
                 script {
                     echo "Checkout SCM stage"
@@ -38,6 +30,13 @@ pipeline {
             steps {
                 script {
                     echo "Publish to Nexus stage"
+                }
+            }
+        }
+         stage('Deploy to Develop Environment') {
+            steps {
+                script {
+                    echo "Declarative stage"
                 }
             }
         }
