@@ -1,36 +1,73 @@
+properties([
+    parameters([
+        choice(
+            choices: ['master', 'feature'],
+            description: 'Select a branch to build first',
+            name: 'branch'
+        )
+    ])
+])
 pipeline {
     agent any
     
     stages {
-        stage('Build') {
-            steps {
+         stage('Build') {
+           steps {
                 script {
-                    echo "Build stage"
-                }
-            }
-        }
+                    if (params.branch == 'master') {
+                        sh '"1640 [main] [ERROR] Failed to execute goal on project riskManagementv3_31: Could not resolve dependencies for project ma.hps.pwc35.pluton.wallet.product.develop:riskManagementv3_31:jar:3.5.1: The following artifacts could not be resolved: ma.hps.pwc35.pluton.wallet.product.develop:cardIssuingv3_31:jar:3.5.1, ma.hps.pwc35.pluton.wallet.product.develop:paramsTransactionsv3_31:jar:3.5.1, ma.hps.pwc35.pluton.wallet.product.develop:paramsRiskManagementv3_31:jar:3.5.1, ma.hps.pwc35.pluton.wallet.product.develop:paramsCardholderv3_31:jar:3.5.1, ma.hps.pwc35.pluton.wallet.product.develop:cardEmvv3_31:jar:3.5.1, org.fornax.cartridges:fornax-cartridges-sculptor-generator-wallet:jar:1.8.WALT, org.fornax.cartridges:fornax-cartridges-sculptor-framework:jar:1.8.0: Cannot access central (https://repo.maven.apache.org/maven2) in offline mode and the artifact ma.hps.pwc35.pluton.wallet.product.develop:cardIssuingv3_31:jar:3.5.1 has not been downloaded from it before. -> [Help 1], 1659 [main] [ERROR], 1659 [main] [ERROR] Re-run Maven using the -X switch to enable full debug logging., 1659 [main] [ERROR], 1659 [main] [ERROR] For more information about the errors and possible solutions, please read the following articles:"'
         
-        stage('Checkout') {
-            steps {
-                script {
-                    echo "Checkout stage"
-                  
+                    } else if (params.branch == 'feature') {
+                        sh '2891 [main] [ERROR] COMPILATION ERROR :, 2891 [main] [ERROR] Source option 5 is no longer supported. Use 7 or later., 2891 [main] [ERROR] Target option 5 is no longer supported. Use 7 or later., 2921 [main] [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.1:compile (default-compile) on project jpublisher: Compilation failure: Compilation failure:, 2921 [main] [ERROR] Source option 5 is no longer supported. Use 7 or later.'
+                    }
                 }
             }
         }
+          stage('Checkout') {
+             steps {
+                script {
+                    if (params.branch == 'master') {
+                      
+                        sh "14880 [main] [ERROR] Workflow interrupted. Reason: Errors during validation., 14880 [main] [ERROR] [ERROR]: file:/app/home/prodjenkins/.jenkins/workspace/CA-MIG_pwc-server_pcamig_develop@2/powerKEY/src/main/resources//powerKEY.btdesign(797): mismatched input '3' expecting '}'(Element: -UNKNOWN-; Reported by: MweReader: loading file from classpath:/powerKEY.btdesign), 14881 [main] [ERROR] [ERROR]: file:/app/home/prodjenkins/.jenkins/workspace/CA-MIG_pwc-server_pcamig_develop@2/powerKEY/src/main/resources//powerKEY.btdesign(864): mismatched input 'Service' expecting '}'(Element: -UNKNOWN-; Reported by: MweReader: loading file from classpath:/powerKEY.btdesign), 14881 [main] [ERROR] [ERROR]: file:/app/home/prodjenkins/.jenkins/workspace/CA-MIG_pwc-server_pcamig_develop@2/powerKEY/src/main/resources//powerKEY.btdesign(257): Couldn't resolve reference to DslSimpleDomainObject Merchant_profile(Element: -UNKNOWN-; Reported by: MweReader: loading file from classpath:/powerKEY.btdesign), 14881 [main] [ERROR] [ERROR]: file:/app/home/prodjenkins/.jenkins/workspace/CA-MIG_pwc-server_pcamig_develop@2/powerKEY/src/main/resources//powerKEY.btdesign(258): Couldn't resolve reference to DslSimpleDomainObject Transactions_definition(Element: -UNKNOWN-; Reported by: MweReader: loading file from classpath:/powerKEY.btdesign)"
+                        error 'authentification failed !!'
+                    } else if (params.branch == 'feature') {
+                   
+                        sh '921591 [main] [ERROR] Error in Component generator of type org.eclipse.xpand2.Generator:, 219591 [main] [ERROR] Workflow interrupted. Reason: null, 219591 [main] [ERROR] [ERROR](Element: entity.getAllNaturalKeyAttributes().get(0); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)]), 219591 [main] [ERROR] [ERROR](Element: entity.getAllNaturalKeyAttributes().get(0).hasHint(""AutoGenerated""); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)]), 219592 [main] [ERROR] [ERROR](Element: entity.getAllNaturalKeyAttributes().size.==(1)&&entity.getAllNaturalKeyReferences().size.==(0)&&entity.getAllNaturalKeyAttributes().get(0).hasHint(""AutoGenerated""); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)])1'
+                    }
+                }
+            }
+        }
+       
+        
+      
         
         stage('Configure') {
-            steps {
+           steps {
                 script {
-                    echo "Configure stage"
+                    if (params.branch == 'master') {
+                     
+                        sh "'02:27:39,754 ERROR WorkflowRunner:450 - [ERROR]: Couldn't find operation 'addAll(List)' for List!(Element: getAllNaturalKeyAttributes(domainObject).addAll(getAllNaturalKeyReferences(domainObject)); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)]), 02:27:39,754 ERROR WorkflowRunner:450 - [ERROR]: Couldn't find operation 'addAll(List)' for List!(Element: List[NamedElement] getAllNaturalKeys(DomainObject domainObject); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)]), 02:27:39,754 ERROR WorkflowRunner:450 - [ERROR]: Couldn't find operation 'addAll(List)' for List!(Element: entity.getAllNaturalKeys(); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)]), 02:27:39,754 ERROR WorkflowRunner:450 - [ERROR]: Couldn't find operation 'addAll(List)' for List!(Element: entity.getAllNaturalKeys().select(e|e.name.==(att.name)); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)]), 02:27:39,754 ERROR WorkflowRunner:450 - [ERROR]: Couldn't find operation 'addAll(List)' for List!(Element: entity.getAllNaturalKeys().select(e|e.name.==(att.name)).size; Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)])'"
+               
+                    } else if (params.branch == 'feature') {
+                
+                        sh 'server,"7873 [main] [ERROR] Failed to execute goal on project alertv3_31: Could not resolve dependencies for project ma.hps.pwc32.neptune.nbkv32.master:alertv3_31:jar:3.1-SNAPSHOT: Cannot access snapshots.archiva.fornax-platform.org (http://www.fornax-platform.org/archiva/repository/snapshots/) in offline mode and the artifact ma.hps.pwc32.neptune.nbkv32.master:caseManagementv3_31:jar:3.1-SNAPSHOT has not been downloaded from it before. -> [Help 1], 7885 [main] [ERROR], 7885 [main] [ERROR] Re-run Maven using the -X switch to enable full debug logging., 7885 [main] [ERROR], 7885 [main] [ERROR] For more information about the errors and possible solutions, please read the following articles:"
+'
+                    }
                 }
             }
         }
         
         stage('Build Again') {
-            steps {
+          steps {
                 script {
-                    echo "Build stage (again)"
+                    if (params.branch == 'master') {
+           
+                        sh '921591 [main] [ERROR] Error in Component generator of type org.eclipse.xpand2.Generator:, 219591 [main] [ERROR] Workflow interrupted. Reason: null, 219591 [main] [ERROR] [ERROR](Element: entity.getAllNaturalKeyAttributes().get(0); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)]), 219591 [main] [ERROR] [ERROR](Element: entity.getAllNaturalKeyAttributes().get(0).hasHint(""AutoGenerated""); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)]), 219592 [main] [ERROR] [ERROR](Element: entity.getAllNaturalKeyAttributes().size.==(1)&&entity.getAllNaturalKeyReferences().size.==(0)&&entity.getAllNaturalKeyAttributes().get(0).hasHint(""AutoGenerated""); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)])'
+            
+                    } else if (params.branch == 'feature') {
+        
+                        sh "'02:27:39,754 ERROR WorkflowRunner:450 - [ERROR]: Couldn't find operation 'addAll(List)' for List!(Element: getAllNaturalKeyAttributes(domainObject).addAll(getAllNaturalKeyReferences(domainObject)); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)]), 02:27:39,754 ERROR WorkflowRunner:450 - [ERROR]: Couldn't find operation 'addAll(List)' for List!(Element: List[NamedElement] getAllNaturalKeys(DomainObject domainObject); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)]), 02:27:39,754 ERROR WorkflowRunner:450 - [ERROR]: Couldn't find operation 'addAll(List)' for List!(Element: entity.getAllNaturalKeys(); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)]), 02:27:39,754 ERROR WorkflowRunner:450 - [ERROR]: Couldn't find operation 'addAll(List)' for List!(Element: entity.getAllNaturalKeys().select(e|e.name.==(att.name)); Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)]), 02:27:39,754 ERROR WorkflowRunner:450 - [ERROR]: Couldn't find operation 'addAll(List)' for List!(Element: entity.getAllNaturalKeys().select(e|e.name.==(att.name)).size; Reported by: Generator(generator): generating 'templates::Root::Root FOR transformedModel' => [TO_GEN_RESOURCES:src/generated/resources, TO_GEN_WEBROOT:src/main/webapp, TO_SRC:src/main/java(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_GEN_SRC_TEST:src/test/generated/java, TO_GEN_RESOURCES_TEST:src/test/generated/resources, TO_SRC_TEST:src/test/java(overwrite=false,append=false,fileEncoding=iso-8859-1), src/generated/java, TO_RESOURCES:src/main/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_RESOURCES_TEST:src/test/resources(overwrite=false,append=false,fileEncoding=iso-8859-1), TO_WEBROOT:src/main/webapp(overwrite=false,append=false,fileEncoding=iso-8859-1)])'"
+                    }
                 }
             }
         }
@@ -38,7 +75,14 @@ pipeline {
         stage('Security Dependency Check') {
             steps {
                 script {
-                    echo "Security Dependency Check stage"
+                    if (params.branch == 'master') {
+
+                        sh '39935 [main] [ERROR] IOException occured during beautification. Content:, 39935 [main] [ERROR] Error message: No space left on device, 39956 [main] [ERROR] IOException occured during beautification. Content:, 39956 [main] [ERROR] Error message: No space left on device, 39996 [main] [ERROR] IOException occured during beautification. Content:'
+                    
+                    } else if (params.branch == 'feature') {
+                  
+                        sh '[ERROR] NoClassDefFoundError occured during beautification. Content:, [ERROR] Error message: org/w3c/dom/ElementTraversal'
+                    }
                 }
             }
         }
